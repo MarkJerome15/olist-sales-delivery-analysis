@@ -1,5 +1,7 @@
 # Olist E-Commerce: Sales & Delivery Analysis
 
+![Pipeline](https://github.com/MarkJerome15/olist-sales-delivery-analysis/actions/workflows/pipeline.yml/badge.svg)
+
 ![Dashboard](images/olist_dashboard.png)
 
 **In short:** Revenue grew about 6x through 2017 and settled near R$0.83M-0.98M a month in 2018. Three states (SP, RJ, MG) bring in about 63% of revenue. Late deliveries are tied to much lower review scores, and the damage jumps sharply once an order is 4 or more days late.

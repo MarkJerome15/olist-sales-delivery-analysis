@@ -1,0 +1,41 @@
+name: Pipeline check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt numpy
+
+      # The real Olist CSVs are too big for GitHub, so CI uses a small
+      # synthetic dataset with the same table and column names.
+      - name: Create sample data
+        run: python tests/make_sample_data.py
+
+      - name: Run pipeline
+        run: python run_pipeline.py --rebuild
+
+      - name: Check outputs exist
+        run: |
+          for f in outputs/q1_monthly_revenue.csv outputs/q2_categories.csv outputs/q2_states.csv outputs/q4_delay_vs_reviews.csv images/q1_monthly_revenue.png images/q2_categories.png images/q2_states.png images/q4_delay_vs_reviews.png; do
+            test -s "$f" || { echo "Missing or empty: $f"; exit 1; }
+          done
+
+      - name: Upload generated charts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sample-charts
+          path: images/
