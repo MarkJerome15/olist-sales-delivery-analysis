@@ -1,0 +1,11 @@
+# Raw data and the database: too big for GitHub
+data/
+*.db
+
+# Python and Jupyter
+__pycache__/
+.ipynb_checkpoints/
+
+# Windows
+Thumbs.db
+desktop.ini
